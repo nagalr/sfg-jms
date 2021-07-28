@@ -30,12 +30,12 @@ public class HelloListener {
                        @Headers MessageHeaders headers, Message message){
 
         log.debug("<<< Received in MY_QUEUE: " + helloWorldMessage);
-
     }
 
     @JmsListener(destination = JmsConfig.MY_SEND_RCV_QUEUE)
-    public void listenForHello(@Payload HelloWorldMessage helloWorldMessage,
-                       @Headers MessageHeaders headers, Message message) throws JMSException {
+    public void listenAndResponse(@Payload HelloWorldMessage helloWorldMessage,
+                                  @Headers MessageHeaders headers,
+                                  Message message) throws JMSException {
 
         HelloWorldMessage payloadMsg = HelloWorldMessage
                 .builder()
@@ -47,7 +47,5 @@ public class HelloListener {
         log.debug("<<< Replay from MY_SEND_RCV_QUEUE: " + payloadMsg);
 
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), payloadMsg);
-
     }
-
 }
