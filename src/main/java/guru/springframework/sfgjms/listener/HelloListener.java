@@ -3,6 +3,7 @@ package guru.springframework.sfgjms.listener;
 import guru.springframework.sfgjms.config.JmsConfig;
 import guru.springframework.sfgjms.model.HelloWorldMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.messaging.MessageHeaders;
@@ -17,9 +18,10 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-07-17.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component
-public class HelloMessageListener {
+public class HelloListener {
 
     private final JmsTemplate jmsTemplate;
 
@@ -27,13 +29,7 @@ public class HelloMessageListener {
     public void listen(@Payload HelloWorldMessage helloWorldMessage,
                        @Headers MessageHeaders headers, Message message){
 
-        //System.out.println("I Got a Message!!!!!");
-
-       // System.out.println(helloWorldMessage);
-
-
-        // uncomment and view to see retry count in debugger
-       // throw new RuntimeException("foo");
+        log.debug("<<< Received in MY_QUEUE: " + helloWorldMessage);
 
     }
 
@@ -46,6 +42,9 @@ public class HelloMessageListener {
                 .id(UUID.randomUUID())
                 .message("World!!")
                 .build();
+
+        log.debug("<<< Within Listener to MY_SEND_RCV_QUEUE");
+        log.debug("<<< Replay from MY_SEND_RCV_QUEUE: " + payloadMsg);
 
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), payloadMsg);
 

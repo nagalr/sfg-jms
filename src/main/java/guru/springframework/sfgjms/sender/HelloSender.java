@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.sfgjms.config.JmsConfig;
 import guru.springframework.sfgjms.model.HelloWorldMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +19,7 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-07-17.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class HelloSender {
@@ -35,7 +37,7 @@ public class HelloSender {
                 .build();
 
         jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE, message);
-
+        log.debug(">>> Insert into MY_QUEUE message: " + message.toString());
     }
 
     @Scheduled(fixedRate = 2000)
@@ -48,6 +50,7 @@ public class HelloSender {
                 .build();
 
         Message receviedMsg = jmsTemplate.sendAndReceive(JmsConfig.MY_SEND_RCV_QUEUE, new MessageCreator() {
+
             @Override
             public Message createMessage(Session session) throws JMSException {
                 Message helloMessage = null;
@@ -56,7 +59,7 @@ public class HelloSender {
                     helloMessage = session.createTextMessage(objectMapper.writeValueAsString(message));
                     helloMessage.setStringProperty("_type", "guru.springframework.sfgjms.model.HelloWorldMessage");
 
-                    System.out.println("Sending Hello");
+                    log.debug(">>> Insert into MY_SEND_RCV_QUEUE message: " + helloMessage.toString());
 
                     return helloMessage;
 
@@ -66,7 +69,7 @@ public class HelloSender {
             }
         });
 
-        System.out.println(receviedMsg.getBody(String.class));
+        log.debug(">>> Received Message: " + receviedMsg.getBody(String.class));
 
     }
 
