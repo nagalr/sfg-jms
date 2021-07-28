@@ -40,7 +40,7 @@ public class HelloListener {
         HelloWorldMessage payloadMsg = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
-                .message("World!!")
+                .message("Response Message!")
                 .build();
 
         log.debug("<<< Within Listener to MY_SEND_RCV_QUEUE");

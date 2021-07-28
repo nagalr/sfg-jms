@@ -41,7 +41,7 @@ public class HelloSender {
     }
 
     @Scheduled(fixedRate = 2000)
-    public void sendandReceiveMessage() throws JMSException {
+    public void sendAndReceiveMessage() throws JMSException {
 
         HelloWorldMessage message = HelloWorldMessage
                 .builder()
@@ -49,7 +49,7 @@ public class HelloSender {
                 .message("Hello")
                 .build();
 
-        Message receviedMsg = jmsTemplate.sendAndReceive(JmsConfig.MY_SEND_RCV_QUEUE, new MessageCreator() {
+        Message receivedMsg = jmsTemplate.sendAndReceive(JmsConfig.MY_SEND_RCV_QUEUE, new MessageCreator() {
 
             @Override
             public Message createMessage(Session session) throws JMSException {
@@ -69,7 +69,7 @@ public class HelloSender {
             }
         });
 
-        log.debug(">>> Received Message: " + receviedMsg.getBody(String.class));
+        log.debug(">>> Received Message: " + receivedMsg.getBody(String.class));
 
     }
 
