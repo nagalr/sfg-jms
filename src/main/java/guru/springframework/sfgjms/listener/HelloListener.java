@@ -29,6 +29,7 @@ public class HelloListener {
     public void listen(@Payload HelloWorldMessage helloWorldMessage,
                        @Headers MessageHeaders headers, Message message){
 
+        log.debug("<<< Within Listener to MY_QUEUE");
         log.debug("<<< Received in MY_QUEUE: " + helloWorldMessage);
     }
 

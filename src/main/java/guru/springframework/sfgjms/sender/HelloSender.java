@@ -28,15 +28,16 @@ public class HelloSender {
     private final ObjectMapper objectMapper;
 
     @Scheduled(fixedRate = 2000)
-    public void sendMessage(){
+    public void sendMessage() throws JsonProcessingException {
 
         HelloWorldMessage message = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
                 .message("Hello World!")
+                .JMSCorrelationID(UUID.randomUUID().toString())
                 .build();
 
-        jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE, message);
+        jmsTemplate. convertAndSend(JmsConfig.MY_QUEUE, message);
         log.debug(">>> Insert into MY_QUEUE message: " + message.toString());
     }
 
@@ -58,6 +59,7 @@ public class HelloSender {
                 try {
                     helloMessage = session.createTextMessage(objectMapper.writeValueAsString(message));
                     helloMessage.setStringProperty("_type", "guru.springframework.sfgjms.model.HelloWorldMessage");
+                    helloMessage.setJMSCorrelationID(UUID.randomUUID().toString());
 
                     log.debug(">>> Insert into MY_SEND_RCV_QUEUE message: " + helloMessage.toString());
 
@@ -72,5 +74,4 @@ public class HelloSender {
         log.debug(">>> Received Message: " + receivedMsg.getBody(String.class));
 
     }
-
 }

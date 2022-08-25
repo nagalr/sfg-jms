@@ -1,0 +1,6 @@
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/config/JmsConfig.java
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/config/TaskConfig.java
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/sender/HelloSender.java
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/SfgJmsApplication.java
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/model/HelloWorldMessage.java
+/Users/ronnen/Sync/Dev/SpringMicroservices/sfg-jms/src/main/java/guru/springframework/sfgjms/listener/HelloMessageListener.java
